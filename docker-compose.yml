@@ -1,0 +1,48 @@
+version: '3.7'
+services:
+  postgresql:
+    container_name: postgresql
+    image: 'postgres:alpine'
+    restart: 'always'
+    environment:
+      POSTGRES_USER: 'root'
+      POSTGRES_PASSWORD: '1111'
+      POSTGRES_DB: 'taxless'
+    ports:
+      - '5432:5432'
+  nginx:
+    restart: always
+    container_name: nginx
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+        - '3050:80'
+    depends_on:
+      - client
+  api:
+    container_name: api
+    build:
+      dockerfile: Dockerfile
+      context: ./server
+    depends_on:
+      - postgresql
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/taxless
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=1111
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
+      - SPRING_DATASOURCE_INITIALIZATION_MODE=always
+      - SERVER_PORT=7070
+  client:
+    container_name: client
+    ports:
+      - '3000:3000'
+    build:
+      dockerfile: Dockerfile
+      context: ./client
+    depends_on:
+      - api
+    volumes:
+      - /app/node_modules
+      - ./client:/app

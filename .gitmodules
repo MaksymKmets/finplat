@@ -1,0 +1,6 @@
+[submodule "finplat-api"]
+	path = finplat-api
+	url = https://github.com/MaksymKmets/finplat-api.git
+[submodule "finplat-ui"]
+	path = finplat-ui
+	url = https://github.com/MaksymKmets/finplat-ui.git
