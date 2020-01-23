@@ -1,27 +1,31 @@
-upstream client {
-    server client:3000;
+#define stream of messages. after server you have to specify correct docker compose host name
+upstream finplat-ui {
+    server finplat-ui:3000;
 }
 
-upstream api {
-    server api:7070;
+upstream finplat-api {
+    server finplat-api:7070;
 }
 
 server {
+    #Nginx will listen to default port
     listen 80;
 
+    #Redirect to the container with docker compose hostname 'finplat-ui' all urls started with /
     location / {
-        proxy_pass http://client;
+        proxy_pass http://finplat-ui;
     }
 
-#   allow to update webbrowser with updation of application immediately
+    #allow to update browser with update of application immediately. Optional for development. Increase the time of respond
     location /sockjs-node {
-        proxy_pass http://client;
+        proxy_pass http://finplat-ui;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "Upgrade";
     }
 
+    #Redirect to the container with docker compose hostname 'finplat-ui' all urls started with /
     location /api {
-        proxy_pass http://api;
+        proxy_pass http://finplat-api;
     }
 }

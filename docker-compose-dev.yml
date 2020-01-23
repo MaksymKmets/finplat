@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_USER: 'root'
       POSTGRES_PASSWORD: '1111'
-      POSTGRES_DB: 'taxless'
+      POSTGRES_DB: 'finplat'
     ports:
       - '5432:5432'
   nginx:
@@ -15,32 +15,33 @@ services:
     container_name: nginx
     build:
       dockerfile: Dockerfile.dev
-      context: client/nginx
+      context: nginx
     ports:
         - '3050:80'
     depends_on:
-      - client
-  api:
-    container_name: api
+      - finplat-ui
+  finplat-api:
+    container_name: finplat-api
     build:
-      dockerfile: client/Dockerfile.dev
-      context: ./server
+      dockerfile: Dockerfile.dev
+      context: ./finplat-api
     depends_on:
       - postgresql
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/taxless
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/finplat
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=1111
       - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
       - SPRING_DATASOURCE_INITIALIZATION_MODE=always
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.PostgreSQLDialect
       - SERVER_PORT=7070
-  client:
-    container_name: client
+  finplat-ui:
+    container_name: finplat-ui
     build:
-      dockerfile: client/Dockerfile.dev
-      context: ./client
+      dockerfile: Dockerfile.dev
+      context: ./finplat-ui
     depends_on:
-      - api
+      - finplat-api
     volumes:
       - /app/node_modules
-      - ./client:/app
+      - ./finplat-ui:/app
