@@ -17,8 +17,8 @@ after_success:
   - docker build -t maksymkmets/nginx ./nginx
 
 # Log in to the docker CLI
-- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --pasword-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --pasword-stdin
 # Take all created docker images and push to the docker hub
-- docker push maksymkmets/finplat-ui
-- docker push maksymkmets/finplat-api
-- docker push maksymkmets/nginx
+  - docker push maksymkmets/finplat-ui
+  - docker push maksymkmets/finplat-api
+  - docker push maksymkmets/nginx
