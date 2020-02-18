@@ -1,0 +1,24 @@
+sudo: required
+services:
+  # the dependencies
+  - docker
+# Build docker images for test running
+before_install:
+  - docker build -t maksymkmets/react-test -f ./finplat-ui/Dockerfile.dev ./finpla-ui
+
+# Get docker images and run tests
+script:
+  - docker run maksymkmets/react-test npm test -- --coverage
+
+# Build docker prod images for each project
+after_success:
+  - docker build -t maksymkmets/finplat-ui ./finplat-ui
+  - docker build -t maksymkmets/finplat-api ./finplat-api
+  - docker build -t maksymkmets/nginx ./nginx
+
+# Log in to the docker CLI
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --pasword-stdin
+# Take all created docker images and push to the docker hub
+- docker push maksymkmets/finplat-ui
+- docker push maksymkmets/finplat-api
+- docker push maksymkmets/nginx
