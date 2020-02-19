@@ -4,7 +4,7 @@ services:
   - docker
 # Build docker images for test running
 before_install:
-  - docker build -t maksymkmets/react-test -f ./finplat-ui/Dockerfile.dev ./finpla-ui
+  - docker build -t maksymkmets/react-test -f ./finplat-ui/Dockerfile.dev ./finplat-ui
 
 # Get docker images and run tests
 script:
