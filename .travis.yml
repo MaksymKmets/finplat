@@ -5,10 +5,12 @@ services:
 # Build docker images for test running
 before_install:
   - docker build -t maksymkmets/react-test -f ./finplat-ui/Dockerfile.dev ./finplat-ui
+  - docker build -t maksymkmets/finplat-api-test -f ./finplat-api/Dockerfile.test ./finplat-api
 
 # Get docker images and run tests
 script:
   - docker run maksymkmets/react-test npm test -- --coverage
+  - docker run maksymkmets/finplat-apip-test mvn test
 
 # Build docker prod images for each project
 after_success:
