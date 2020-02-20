@@ -10,7 +10,7 @@ before_install:
 # Get docker images and run tests
 script:
   - docker run maksymkmets/react-test npm test -- --coverage
-  - docker run maksymkmets/finplat-apip-test mvn test
+  - docker run maksymkmets/finplat-api-test mvn test
 
 # Build docker prod images for each project
 after_success:
