@@ -43,7 +43,7 @@
         },
         {
           "name": "SERVER_PORT",
-          "value": "${SPRING_APP_SERVER_PORT}"
+          "value": ${SPRING_APP_SERVER_PORT}
         }
       ]
     },
