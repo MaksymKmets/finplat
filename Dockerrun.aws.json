@@ -1,0 +1,71 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "finplat-ui",
+      "image": "maksymkmets/finplat-ui",
+      "hostname": "finplat-ui",
+      "essential": false,
+      "memory": 256,
+      "dependsOn": [
+        {
+          "containerName": "finplat-api",
+          "condition": "START"
+        }
+      ]
+    },
+    {
+      "name": "finplat-api",
+      "image": "maksymkmets/finplat-api",
+      "hostname": "finplat-api",
+      "essensial": false,
+      "memory": 256,
+      "environment": [
+        {
+          "name": "SPRING_DATASOURCE_URL",
+          "value": "jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PASSWORD}/${POSTGRES_DB}?createDatabaseIfNotExist=true"
+        },
+        {
+          "name": "SPRING_DATASOURCE_USERNAME",
+          "value": "${POSTGRES_USER}",
+        },
+        {
+          "name": "SPRING_DATASOURCE_PASSWORD",
+          "value": "${POSTGRES_USER}",
+        },
+        {
+          "name": "SPRING_DATASOURCE_DRIVER_CLASS_NAME",
+          "value": "${POSTGRES_DRIVER}",
+        },
+        {
+          "name": "SPRING_JPA_DATABASE_PLATFORM",
+          "value": "${POSTGRES_JPA_DATABASE_PLATFORM}",
+        },
+        {
+          "name": "SERVER_PORT",
+          "value": "${SPRING_APP_SERVER_PORT}",
+        }
+      ]
+    },
+    {
+      "name": "nginx",
+      "image": "maksymkmets/nginx",
+      "hostname": "nginx",
+      "essential": true,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": ["finplat-ui","finplat-api"],
+      "memory": 256,
+      "dependsOn": [
+        {
+          "containerName": "finplat-ui",
+          "condition": "START"
+        }
+      ]
+    }
+  ]
+}
