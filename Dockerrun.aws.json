@@ -18,7 +18,7 @@
       "name": "finplat-api",
       "image": "maksymkmets/finplat-api",
       "hostname": "finplat-api",
-      "essensial": false,
+      "essential": false,
       "memory": 256
     },
     {
