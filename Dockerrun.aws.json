@@ -27,23 +27,23 @@
         },
         {
           "name": "SPRING_DATASOURCE_USERNAME",
-          "value": "${POSTGRES_USER}",
+          "value": "${POSTGRES_USER}"
         },
         {
           "name": "SPRING_DATASOURCE_PASSWORD",
-          "value": "${POSTGRES_USER}",
+          "value": "${POSTGRES_USER}"
         },
         {
           "name": "SPRING_DATASOURCE_DRIVER_CLASS_NAME",
-          "value": "${POSTGRES_DRIVER}",
+          "value": "${POSTGRES_DRIVER}"
         },
         {
           "name": "SPRING_JPA_DATABASE_PLATFORM",
-          "value": "${POSTGRES_JPA_DATABASE_PLATFORM}",
+          "value": "${POSTGRES_JPA_DATABASE_PLATFORM}"
         },
         {
           "name": "SERVER_PORT",
-          "value": "${SPRING_APP_SERVER_PORT}",
+          "value": "${SPRING_APP_SERVER_PORT}"
         }
       ]
     },
