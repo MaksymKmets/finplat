@@ -2,19 +2,6 @@
   "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
-      "name": "postgresql",
-      "image": "postgres:alpine",
-      "hostname": "postgresql",
-      "essential": false,
-      "memory": 256,
-      "portMappings": [
-        {
-          "hostPort": 5432,
-          "containerPort": 5432
-        }
-      ]
-    },
-    {
       "name": "finplat-ui",
       "image": "maksymkmets/finplat-ui",
       "hostname": "finplat-ui",
@@ -32,13 +19,7 @@
       "image": "maksymkmets/finplat-api",
       "hostname": "finplat-api",
       "essential": false,
-      "memory": 256,
-      "dependsOn": [
-        {
-          "containerName": "postgresql",
-          "condition": "START"
-        }],
-      "links": ["postgresql"]
+      "memory": 256
     },
     {
       "name": "nginx",
