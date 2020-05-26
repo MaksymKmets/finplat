@@ -6,7 +6,13 @@
       "image": "postgres:alpine'",
       "hostname": "postgresql",
       "essential": false,
-      "memory": 256
+      "memory": 256,
+      "portMappings": [
+        {
+          "hostPort": 5432,
+          "containerPort": 5432
+        }
+      ]
     },
     {
       "name": "finplat-ui",
@@ -31,7 +37,8 @@
         {
           "containerName": "postgresql",
           "condition": "START"
-        },
+        }],
+      "links": ["postgresql"]
     },
     {
       "name": "nginx",
