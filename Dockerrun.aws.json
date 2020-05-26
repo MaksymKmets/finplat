@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "postgresql",
-      "image": "postgres:alpine'",
+      "image": "postgres:alpine",
       "hostname": "postgresql",
       "essential": false,
       "memory": 256,
